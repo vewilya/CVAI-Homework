@@ -1,0 +1,19 @@
+# Docker Compose Configuration
+# Vielleicht kommen da noch mehr Tools dazu
+services:
+  streamlit:
+    build:
+      context: ./streamlit-dashboard
+      dockerfile: Dockerfile
+    container_name: cvai_streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/data:ro
+      - ./streamlit-dashboard:/app # ← konsistent
+    working_dir: /app
+    command: >
+      streamlit run main.py
+      --server.address=0.0.0.0
+      --server.port=8501
+    restart: unless-stopped
